@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Valentine Invitation 💘</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Meow+Script&display=swap" rel="stylesheet">
+
+<style>
+:root {
+    --pink: #ff4d6d;
+    --pink-light: #ffe6eb;
+    --gold: #ffd6a5;
+    --shadow: 0 30px 80px rgba(0,0,0,.25);
+}
+
+* { box-sizing: border-box; margin:0; padding:0; }
+
+body {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: radial-gradient(circle at top, #ffd6dd, #ff9a9e);
+    font-family: 'Meow Script', cursive;
+    overflow: hidden;
+}
+
+/* ================= ENVELOPE ================= */
+.envelope {
+    width: clamp(280px, 80vw, 520px);
+    aspect-ratio: 13/8.5;
+    position: relative;
+    perspective: 1200px;
+    cursor: pointer;
+}
+
+/* BACK */
+.env-back {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, #fff, var(--pink-light));
+    border-radius: 20px;
+    box-shadow: var(--shadow);
+    z-index: 1;
+}
+
+/* SIDE FLAPS */
+.env-left, .env-right {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, #fff0f3, #ffe6eb);
+    z-index: 2;
+}
+
+.env-left { clip-path: polygon(0 0, 50% 50%, 0 100%); }
+.env-right { clip-path: polygon(100% 0, 50% 50%, 100% 100%); }
+
+/* BOTTOM FLAP */
+.env-bottom {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, #ffe6eb, #ffcdd7);
+    clip-path: polygon(0 100%, 50% 45%, 100% 100%);
+    z-index: 3;
+}
+
+/* TOP FLAP */
+.env-top {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, #ffb3c1, #ffe6eb);
+    clip-path: polygon(0 0, 50% 55%, 100% 0);
+    transform-origin: top;
+    transition: transform 1s ease;
+    z-index: 6;
+}
+
+.envelope.open .env-top {
+    transform: rotateX(180deg);
+}
+
+/* SEAL */
+.seal {
+    position: absolute;
+    top: 48%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: clamp(30px, 6vw, 42px);
+    z-index: 7;
+    transition: opacity .4s ease, transform .4s ease;
+}
+
+.envelope.open .seal {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(.6);
+}
+
+/* ================= CARD ================= */
+.card {
+    position: absolute;
+    left: 50%;
+    top: 15%;
+    width: 86%;
+    max-width: 430px;
+    padding: clamp(2.4rem,4vw,2.2rem);
+    background: linear-gradient(145deg,#fff,#fff5f8);
+    border-radius: 32px;
+    text-align: center;
+    box-shadow: var(--shadow);
+    border: 2px solid var(--gold);
+    transform: translate(-50%,140%);
+    opacity: 0;
+    transition: transform 1s ease, opacity .6s ease;
+    z-index: 5;
+}
+
+.envelope.open .card {
+    transform: translate(-50%, -10%);
+    opacity: 1;
+}
+
+.card::before {
+    content: "💖";
+    position: absolute;
+    top: -22px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: white;
+    padding: 6px 12px;
+    border-radius: 999px;
+    box-shadow: 0 5px 15px rgba(0,0,0,.15);
+}
+
+h1 {
+    font-size: clamp(2.2rem,6vw,3.2rem);
+    color: var(--pink);
+}
+
+p {
+    font-size: clamp(1.3rem,4vw,1.8rem);
+    color: #7a2d3b;
+    margin-bottom: 1.6rem;
+}
+
+/* BUTTONS */
+.buttons {
+    display: flex;
+    justify-content: center;
+    gap: 22px;
+}
+
+button {
+    padding: 12px 34px;
+    font-size: 1.5rem;
+    border: none;
+    border-radius: 999px;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+/* YES button glowing */
+#yesBtn {
+    background: var(--pink);
+    color: white;
+    box-shadow: 0 0 30px rgba(255,77,109,.7);
+    animation: glow 1.8s infinite alternate;
+}
+
+@keyframes glow {
+    from { box-shadow: 0 0 15px rgba(255,77,109,.4); }
+    to { box-shadow: 0 0 40px rgba(255,77,109,.9); }
+}
+
+/* NO button crying */
+#noBtn {
+    background: #eee;
+    color: #444;
+    position: relative;
+    overflow: hidden;
+}
+
+#noBtn::after {
+    content: "💧";
+    position: absolute;
+    left: 50%;
+    top: -10px;
+    animation: tear 1s infinite;
+}
+
+@keyframes tear {
+    from { transform: translate(-50%,0); opacity: 0; }
+    30% { opacity: 1; }
+    to { transform: translate(-50%,40px); opacity: 0; }
+}
+
+.shake { animation: shake .3s; }
+@keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    50% { transform: translateX(5px); }
+    75% { transform: translateX(-5px); }
+    100% { transform: translateX(0); }
+}
+
+/* ================= PHOTO POP ================= */
+.photo-pop {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 10;
+}
+
+.photo-pop img {
+    position: absolute;
+    width: clamp(90px, 20vw, 140px);
+    aspect-ratio: 1;
+    object-fit: cover;
+    border-radius: 16px;
+    background: white;
+    padding: 6px;
+    box-shadow: 0 20px 40px rgba(0,0,0,.3);
+    opacity: 0;
+    transform: scale(.4) rotate(var(--rot));
+    animation: popIn .8s ease forwards;
+}
+
+@keyframes popIn {
+    to { opacity: 1; transform: scale(1) rotate(var(--rot)); }
+}
+
+/* Hearts */
+.heart {
+    position: absolute;
+    font-size: 24px;
+    animation: float 6s linear infinite;
+    color: rgba(255,77,109,.6);
+}
+
+@keyframes float {
+    to { transform: translateY(-800px); opacity: 0; }
+}
+</style>
+</head>
+
+<body>
+
+<audio id="bgMusic" loop>
+    <source src="Only You.mp3" type="audio/mpeg">
+</audio>
+
+<div class="envelope" onclick="openEnvelope()">
+    <div class="env-back"></div>
+    <div class="env-left"></div>
+    <div class="env-right"></div>
+    <div class="env-bottom"></div>
+    <div class="env-top"></div>
+
+    <div class="seal">💖</div>
+
+    <div class="card">
+        <h1>My Wife 💘</h1>
+        <p>Would you like to be my Valentine?</p>
+
+        <div class="buttons">
+            <button id="yesBtn">Yes 💕</button>
+            <button id="noBtn">No 🙈</button>
+        </div>
+    </div>
+
+    <div class="photo-pop" id="photoPop"></div>
+</div>
+
+<script>
+const envelope = document.querySelector(".envelope");
+const yesBtn = document.getElementById("yesBtn");
+const noBtn = document.getElementById("noBtn");
+const photoPop = document.getElementById("photoPop");
+const music = document.getElementById("bgMusic");
+
+const images = ["image1.jpg","image2.jpg","image3.jpg","image4.jpg"];
+let opened = false;
+let moveCount = 0;
+
+function openEnvelope() {
+    if (opened) return;
+    opened = true;
+    envelope.classList.add("open");
+    music.play().catch(()=>{});
+    popPhotos();
+}
+
+function popPhotos() {
+    photoPop.innerHTML = "";
+    const positions = [
+        { top: "-12%", left: "-18%" },
+        { top: "-12%", right: "-18%" },
+        { bottom: "8%", left: "-18%" },
+        { bottom: "8%", right: "-18%" }
+    ];
+    images.sort(()=>0.5-Math.random()).slice(0,4).forEach((src,i)=>{
+        const img = document.createElement("img");
+        img.src = src;
+        img.style.setProperty("--rot", `${Math.random()*30-15}deg`);
+        Object.assign(img.style, positions[i]);
+        img.style.animationDelay = `${i*0.15}s`;
+        photoPop.appendChild(img);
+    });
+}
+
+/* NO button */
+noBtn.addEventListener("mouseenter", () => {
+    const card = document.querySelector(".card");
+    const maxX = card.clientWidth - noBtn.offsetWidth - 20;
+    const maxY = card.clientHeight - noBtn.offsetHeight - 20;
+    noBtn.style.transform = `translate(${Math.random()*maxX}px,${Math.random()*maxY}px)`;
+    noBtn.classList.add("shake");
+    setTimeout(()=>noBtn.classList.remove("shake"),300);
+    moveCount++;
+    if(moveCount>6){ noBtn.textContent="Okay… 😭"; noBtn.style.transform="translate(0,0)"; }
+});
+
+/* YES button magnet + click */
+yesBtn.addEventListener("click", e=>{
+    e.stopPropagation();
+    alert("YAY! 💖 I knew you'd say YES! Happy Valentine’s 💕");
+});
+
+document.addEventListener("mousemove", e=>{
+    const r = yesBtn.getBoundingClientRect();
+    const dx = e.clientX-(r.left+r.width/2);
+    const dy = e.clientY-(r.top+r.height/2);
+    const d = Math.hypot(dx,dy);
+    yesBtn.style.transform=d<120?`translate(${dx*.05}px,${dy*.05}px)`:"translate(0,0)";
+});
+
+/* Floating hearts */
+setInterval(()=>{
+    const h=document.createElement("div");
+    h.className="heart";
+    h.textContent="❤️";
+    h.style.left=Math.random()*100+"vw";
+    h.style.bottom="-20px";
+    document.body.appendChild(h);
+    setTimeout(()=>h.remove(),6000);
+},450);
+</script>
+
+</body>
+</html>
